@@ -6,7 +6,7 @@
   "scripts": {
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
-    "dev": "nodemon --inspect src/server.js",
+    "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "migrate": "node src/database/migrate.js"
   },
