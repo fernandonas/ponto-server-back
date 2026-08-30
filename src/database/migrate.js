@@ -3,20 +3,37 @@ const path = require('path');
 const { Pool } = require('pg');
 const { databaseUrl } = require('../config/env');
 
-const pool = new Pool({ connectionString: databaseUrl });
+const pool = new Pool({
+  connectionString: databaseUrl,
+});
 
 async function migrate() {
-  const migrationPath = path.join(__dirname, 'migrations', '001_create_users.sql');
-  const sql = fs.readFileSync(migrationPath, 'utf8');
+  try {
+    const migrationsPath = path.join(__dirname, 'migrations');
 
-  await pool.query(sql);
-  await pool.end();
+    const migrationFiles = fs
+      .readdirSync(migrationsPath)
+      .filter((file) => file.endsWith('.sql'))
+      .sort();
 
-  console.log('Migrations executadas com sucesso.');
+    for (const migrationFile of migrationFiles) {
+      console.log(`Executando migration: ${migrationFile}`);
+
+      const migrationPath = path.join(migrationsPath, migrationFile);
+      const sql = fs.readFileSync(migrationPath, 'utf8');
+
+      await pool.query(sql);
+
+      console.log(`Migration ${migrationFile} executada com sucesso.`);
+    }
+
+    console.log('Todas as migrations foram executadas com sucesso.');
+  } catch (error) {
+    console.error('Erro ao executar migrations:', error.message);
+    process.exitCode = 1;
+  } finally {
+    await pool.end();
+  }
 }
 
-migrate().catch(async (error) => {
-  await pool.end();
-  console.error('Erro ao executar migrations:', error.message);
-  process.exit(1);
-});
+migrate();

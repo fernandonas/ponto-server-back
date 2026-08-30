@@ -5,6 +5,7 @@ const { frontendOrigin } = require('./config/env');
 const authRoutes = require('./routes/auth.routes');
 const diceRoutes = require('./routes/dice.routes');
 const userRoutes = require('./routes/user.routes');
+const expensesRoutes = require('./routes/expenses.routes');
 const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
@@ -13,6 +14,7 @@ const allowedOrigins = new Set([
   frontendOrigin,
   'http://localhost:4200',
   'http://127.0.0.1:4200',
+  'http://192.168.100.8:4200'
 ]);
 
 app.use(cors({
@@ -33,6 +35,7 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/dice', diceRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/expenses', expensesRoutes);
 
 app.use(errorHandler);
 

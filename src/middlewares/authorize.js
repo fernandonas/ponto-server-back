@@ -1,7 +1,7 @@
 function authorize(...allowedRoles) {
   return (req, res, next) => {
     if (!req.user || !allowedRoles.includes(req.user.role)) {
-      return res.status(403).json({ message: 'Acesso negado.' });
+      return res.status(403).json({ message: 'Você não tem permissão para realizar esta ação.' });
     }
 
     return next();

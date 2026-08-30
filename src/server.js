@@ -1,6 +1,6 @@
 const app = require('./app');
 const { port } = require('./config/env');
 
-app.listen(port, () => {
+app.listen(port, '192.168.100.8', () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
