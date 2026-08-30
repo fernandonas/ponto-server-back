@@ -15,7 +15,7 @@ const allowedOrigins = new Set([
   'http://localhost:4200',
   'http://127.0.0.1:4200',
   'http://192.168.100.8:4200',
-  'https://ponto-server-front.vercel.app/'
+  'https://ponto-server-front.vercel.app'
 ]);
 
 app.use(cors({
