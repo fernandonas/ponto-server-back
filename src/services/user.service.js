@@ -23,6 +23,14 @@ function validateRole(role) {
   }
 }
 
+function validateRoleChange(loggedUserRole, newRole) {
+  if (loggedUserRole === 'basic' && newRole === 'admin') {
+    const error = new Error('Sem permissão para alterar esse perfil.');
+    error.statusCode = 403;
+    throw error;
+  }
+}
+
 function validateCreateUser({ name, email, password }) {
   if (!name || !email || !password) {
     const error = new Error('Nome, email e senha sao obrigatorios.');
@@ -107,6 +115,7 @@ async function updateUser(id, data) {
 
   if (data.role !== undefined) {
     validateRole(data.role);
+    validateRoleChange(data.loggedUserRole, data.role);
     changes.role = data.role;
   }
 
