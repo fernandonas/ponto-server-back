@@ -3,9 +3,9 @@ const cors = require('cors');
 
 const { frontendOrigin } = require('./config/env');
 const authRoutes = require('./routes/auth.routes');
-const diceRoutes = require('./routes/dice.routes');
 const userRoutes = require('./routes/user.routes');
-const expensesRoutes = require('./routes/expenses.routes');
+const venuesRoutes = require('./routes/venue.routes');
+const matchRoutes = require('./routes/match.routes');
 const errorHandler = require('./middlewares/error-handler');
 
 const app = express();
@@ -29,14 +29,14 @@ app.use(cors({
 }));
 app.use(express.json());
 
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
 app.use('/api/auth', authRoutes);
-app.use('/api/dice', diceRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/expenses', expensesRoutes);
+app.use('/api/venues', venuesRoutes);
+app.use('/api/matches', matchRoutes);
 
 app.use(errorHandler);
 
