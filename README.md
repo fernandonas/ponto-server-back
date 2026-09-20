@@ -1,4 +1,4 @@
-# Ponto Server
+# PontoSet
 
 API Express com PostgreSQL, CRUD de usuarios e login com JWT.
 
